@@ -6,7 +6,6 @@ use App\Employee;
 use App\Http\Controllers\Controller;
 use App\Services\EmployeeService;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 
 class PageController extends Controller {
@@ -38,7 +37,6 @@ class PageController extends Controller {
      */
     public function searchEmployee(Request $request)
     {
-        Log::error($request->all());
         $validator = Validator::make($request->all(), [
             'search_parameter' => 'bail|required'
         ]);
