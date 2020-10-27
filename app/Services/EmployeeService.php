@@ -7,6 +7,18 @@ use App\Employee;
 
 class EmployeeService {
 
+    /**
+     * @return Employee[]|\Illuminate\Database\Eloquent\Collection
+     * @throws \Exception
+     *
+     * This function returns the Employees for the list that needs to be displayed
+     * Instead of querying the API every time we can just get the expected information
+     * from the DB
+     *
+     * In case of more records the DB query shoyld be chunked in order for the system to be
+     * able to handle all the information that incomes
+     *
+     */
     public static function getEmployees() {
 
         if (!Employee::all()->count()) {

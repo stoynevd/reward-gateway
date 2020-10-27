@@ -110,7 +110,13 @@
                 style="margin-right: 10px"
             >
             <button type="button" class="btn btn-light" @click="searchEmployee()">Search</button>
-            <button v-if="allEmployees.length === 1" type="button" class="btn btn-light" @click="window.location='/listEmployees'">Back</button>
+            <button v-if="allEmployees.length === 1"
+                    type="button"
+                    class="btn btn-light"
+                    @click="window.location='/listEmployees'"
+                    style="margin-left: 10px"
+            >
+                Back</button>
         </div>
         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-xl-4 gutters-sm">
             <div v-for="employee in allEmployees">

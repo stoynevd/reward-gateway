@@ -28,6 +28,16 @@ class Wrapper {
         $this->client = $client;
     }
 
+    /**
+     *
+     * This is the API Wrapper that handles the calls to the API
+     *
+     * @param $method
+     * @param $path
+     * @param null $data
+     * @return mixed
+     * @throws GuzzleHttp\Exception\GuzzleException
+     */
     public function call($method, $path, $data = null) {
         $method = strtolower($method);
         $response = null;
