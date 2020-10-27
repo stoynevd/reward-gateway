@@ -103,7 +103,7 @@
 <div class="container" id="employees">
     <div class="main-body">
         <div class="row" style="padding: 20px">
-            <input v-model="uuid" class="form-control col-lg-10"
+            <input v-model="search_parameter" class="form-control col-lg-10"
                    type="text"
                    placeholder="Search"
                    aria-label="Search"
@@ -147,15 +147,15 @@
         el: '#employees',
         data: () => ({
             allEmployees: {!! $all_employees !!},
-            uuid: null
+            search_parameter: null
         }),
         methods: {
             searchEmployee() {
-                if (this.uuid === null) {
-                    alert('You must enter an UUID in order to search');
+                if (this.search_parameter === null) {
+                    alert('You must enter an UUID/Name in order to search');
                 }
                 axios.post('/searchEmployee', {
-                    'uuid': this.uuid
+                    'search_parameter': this.search_parameter
                 }).then((response) => {
                     console.log(response);
                     this.allEmployees = [JSON.parse(response.data.employee)]

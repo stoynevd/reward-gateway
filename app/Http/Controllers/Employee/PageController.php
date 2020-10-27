@@ -6,6 +6,7 @@ use App\Employee;
 use App\Http\Controllers\Controller;
 use App\Services\EmployeeService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 
 class PageController extends Controller {
@@ -35,9 +36,11 @@ class PageController extends Controller {
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function searchEmployee(Request $request) {
+    public function searchEmployee(Request $request)
+    {
+        Log::error($request->all());
         $validator = Validator::make($request->all(), [
-           'uuid' => 'bail|required'
+            'search_parameter' => 'bail|required'
         ]);
         if ($validator->fails()) {
             return response()->json([
@@ -46,17 +49,23 @@ class PageController extends Controller {
             ]);
         }
 
-        if ($employee = Employee::where('uuid', $request->input('uuid'))->first()) {
+        if (preg_match_all('/.+[0-9]+.+/m', $request->input('search_parameter'))) {
+            $query = 'uuid';
+        } else {
+            $query = 'name';
+        }
+
+        if ($employee = Employee::where($query, $request->input('search_parameter'))->first()) {
             return response()->json([
                 'employee' => json_encode($employee),
                 'success' => true
             ]);
-        } else {
-            return response()->json([
-                'employee' => 'Employee does not exist',
-                'success' => false
-            ]);
         }
+
+        return response()->json([
+            'employee' => 'Employee does not exist',
+            'success' => false
+        ]);
     }
 
 }
